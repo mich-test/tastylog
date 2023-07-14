@@ -123,9 +123,19 @@ jobs:
         - name: Terraform init
           run: |
             terraform init -no-color
-        - name: Terraform apply
+        # - name: Terraform apply
+        #   run: |
+        #     terraform apply \
+        #     -var 'project=${{ env.TF_PROJECT }}' \
+        #     -var 'environment=${{ env.TF_ENVIRONMENT }}' \
+        #     -var 'username=${{ secrets.MYSQL_USERNAME }}' \
+        #     -var 'password=${{ secrets.MYSQL_PASSWORD }}' \
+        #     -input=false \
+        #     -no-color \
+        #     -auto-approve
+        - name: Terraform destroy
           run: |
-            terraform apply \
+            terraform destroy \
             -var 'project=${{ env.TF_PROJECT }}' \
             -var 'environment=${{ env.TF_ENVIRONMENT }}' \
             -var 'username=${{ secrets.MYSQL_USERNAME }}' \
@@ -133,22 +143,3 @@ jobs:
             -input=false \
             -no-color \
             -auto-approve
-            - name: Terraform apply
-              # run: |
-              #   terraform apply \
-              #   -var 'project=${{ env.TF_PROJECT }}' \
-              #   -var 'environment=${{ env.TF_ENVIRONMENT }}' \
-              #   -var 'username=${{ secrets.MYSQL_USERNAME }}' \
-              #   -var 'password=${{ secrets.MYSQL_PASSWORD }}' \
-              #   -input=false \
-              #   -no-color \
-              #   -auto-approve
-              run: |
-                terraform plan \
-                  -var 'project=${{ env.TF_PROJECT }}' \
-                  -var 'environment=${{ env.TF_ENVIRONMENT }}' \
-                  -var 'username=${{ secrets.MYSQL_USERNAME }}' \
-                  -var 'password=${{ secrets.MYSQL_PASSWORD }}' \
-                  -input=false \
-                  -no-color \
-                  -detailed-exitcode
